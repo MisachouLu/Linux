@@ -1,0 +1,38 @@
+Mysql5.7多源复制配置
+
+在5.7版本之前，mysql做数据同步只能局限于一主一从，大大降低了服务器的利用率，在5.7发布之后，引入了multi-source的概念，也有了channel的概念，支持了多主一从同步方式，也就是多源复制，
+大大提高了服务器的利用空间；
+
+一、环境说明
+已经安装好的mysql服务器三台，两台配置为主，一台配置为从，mysql数据库安装可参考本站文章mysql数据库安装，主从数据库配置可参考master.cnf以及slave.cnf，具体分配如下：
+master1：192.168.71.26
+master2：192.168.71.27
+slave：192.168.71.28
+master1授权用户：test1/123456
+master2授权用户：test2/123456
+
+二、配置
+master1：>grant replication slave on *.* to test1@”192.168.71.28″ identified by “123456”;
+master2： >grant replication slave on *.* to test2@”192.168.71.28″ identified by “123456”;
+slave: 
+>change master to
+>master_host=”192.168.71.26″,
+>master_user=”test1″,
+>master_password=”123456″,
+>master_log_file=”mysql-bin.000004″, 
+>master_log_pos=154 for channel “master26”;
+########################
+>change master to
+>master_host=”192.168.71.27″,
+>master_user=”test2″,
+>master_password=”123456″,
+>master_log_file=”mysql-bin.000002″, 
+>master_log_pos=602 for channel “master27”; 
+启动同步：
+>start slave for channel “master26”;
+>start slave for channel “master27”;
+查看同步状态：
+>show slave status for channel “master26″\G 
+>show slave status for channel “master27″\G 
+测试：
+可分别在master1以及master2创建数据，从库查看是否同步。
