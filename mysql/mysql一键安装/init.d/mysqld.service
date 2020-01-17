@@ -1,0 +1,11 @@
+[Unit]
+Description=Mysql5.7 server daemon
+After=network.target
+
+[Service]
+Type=forking
+ExecStart=/etc/init.d/mysqld start
+ExecStop=/etc/init.d/mysqld stop
+
+[Install]
+WantedBy=multi-user.target
