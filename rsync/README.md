@@ -1,14 +1,13 @@
-Rsync Service Configure
-=====
+# Rsync Service Configure
 
-一、同步方式
-------
-- [本地间数据同步,类似cp命令](#三、本地间数据同步)
-- [远程同步即ssh方式进行数据同步](#四、远程同步)
-- [以服务方式进行数据同步](#五、rsync服务同步)
+## 一、同步方式
+
+- [本地间数据同步,类似cp命令](##三、本地间数据同步)
+- [远程同步即ssh方式进行数据同步](##四、远程同步)
+- [以服务方式进行数据同步](##五、rsync服务同步)
 ***
-二、rsync参数
--------
+## 二、rsync参数
+
 ***
 -v, --verbose 详细模式输出  
 -q, --quiet 精简输出模式  
@@ -71,8 +70,8 @@ Rsync Service Configure
 --password-file=FILE 从FILE中得到密码  
 --bwlimit=KBPS 限制I/O带宽，KBytes per second
 ***
-三、本地间数据同步
----
+## 三、本地间数据同步
+
 * **rsync  选项 本地目录1  本地目录2**    
 * **rsync  选项 本地目录1/ 本地目录2**  
 
@@ -87,8 +86,8 @@ Rsync Service Configure
 
 上面是不带”/”情况下，可以看出/root/tesst整个目录被同步到/data/test下，所以在使用rsync时，要注意是要带”/”还是不带”/”。
 ***
-四、远程同步
----
+## 四、远程同步
+
 * **rsync  选项 /路径/目录  用户名@对方IP:/路径/目录    #本地--->远程** 
 * **rsync  选项 用户名@对方IP:/路径/对方目录 /路径/目录 #远程--->本地**  
 
@@ -126,8 +125,8 @@ do
 done  
 **#nohup  sh /data/sh/rsync.sh > /dev/null& #也可使用计划任务**  
 ***
-五、rsync服务同步
----
+## 五、rsync服务同步
+
 **服务端配置:**  
 #yum install -y rsync  
 主配置文件：**/etc/rsyncd.conf**  
@@ -196,8 +195,8 @@ auth users = test1
 ![do](https://www.zhengxk.com/wp-content/uploads/2019/07/image-3-1024x257.png)  
 ![do](https://www.zhengxk.com/wp-content/uploads/2019/07/image-4.png)  
 ***
-六、异常处理
----
+## 六、异常处理
+
 在三种方式中，rsync同步方式遇到的问题会多点，下面的异常都是针对rsync服务同步方式进行。  
 ***  
 问题一:rsync: chgrp "/." (in serverapp) failed: Operation not permitted (1)  
