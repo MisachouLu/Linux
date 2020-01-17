@@ -2,9 +2,9 @@
 
 ## 一、同步方式
 
-- 本地间数据同步,类似cp命令
-- 远程同步即ssh方式进行数据同步
-- 以服务方式进行数据同步
+- [本地间数据同步,类似cp命令](https://github.com/zhengxuekang/CentOS/tree/master/rsync#%E4%B8%89%E6%9C%AC%E5%9C%B0%E9%97%B4%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5)
+- [远程同步即ssh方式进行数据同步](https://github.com/zhengxuekang/CentOS/tree/master/rsync#%E5%9B%9B%E8%BF%9C%E7%A8%8B%E5%90%8C%E6%AD%A5)
+- [以服务方式进行数据同步](https://github.com/zhengxuekang/CentOS/tree/master/rsync#%E4%BA%94rsync%E6%9C%8D%E5%8A%A1%E5%90%8C%E6%AD%A5)
 ***
 ## 二、rsync参数
 
