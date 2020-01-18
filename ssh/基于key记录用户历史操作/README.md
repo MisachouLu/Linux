@@ -4,7 +4,7 @@
 
 ## 一、配置   
 
-这里引入脚本[user_log.sh](https://github.com/zhengxuekang/CentOS/blob/master/ssh/%E5%9F%BA%E4%BA%8Ekey%E8%AE%B0%E5%BD%95%E7%94%A8%E6%88%B7%E5%8E%86%E5%8F%B2%E6%93%8D%E4%BD%9C/user_log.sh)，将脚本放在/etc/profile.d下，适用于centos7+，用户登录时候会执行该目录下的脚本文件，所以该目录可定制一些操作，这里不展开说明。  
+这里引入脚本[user_log.sh](https://github.com/zhengxuekang/CentOS/blob/master/ssh/%E5%9F%BA%E4%BA%8Ekey%E8%AE%B0%E5%BD%95%E7%94%A8%E6%88%B7%E5%8E%86%E5%8F%B2%E6%93%8D%E4%BD%9C/user_log.sh)，将脚本放在/etc/profile.d下，适用于centos7+，用户登录时候会执行该目录下的脚本文件，所以该目录可定制一些操作，另外注意过程中如果出现问题比如获取不到用户，在脚本中过过滤出**matching key found**关键字，如果/var/log/secure中没有这个关键字，排除操作系统外，需要注意就是ssh版本，将ssh升级到高版本如7.7即可，具体操作可参考openssh升级。
 ***
 ## 二、测试  
 ~/.ssh/authorized_keys文件中需要有内容，并按照"**ssh-rsa 公钥内容 用户**"格式排列好，使用不同用户的私钥登录到服务器，查看目录/var/log/login/histlog/下是否有生成对应以用户名命名的日志文件。  
