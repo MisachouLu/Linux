@@ -1,0 +1,8 @@
+# 监控连接状态用的模块,在server段导入
+location /nginx_status {
+        stub_status on;
+        access_log off;
+        allow 127.0.0.1;
+        allow 14.23.118.34;
+        deny all;
+}

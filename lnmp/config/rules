@@ -1,0 +1,14 @@
+# 目录限制模块,在server段导入
+location ^~ /templates/ { return 403; }
+location ^~ /update/    { return 403; }
+location ^~ /class/     { return 403; }
+location ^~ /cache/     { return 403; }
+location ^~ /unittest/  { return 403; }
+location ^~ /module/    { return 403; }
+location ^~ /library/   { return 403; }
+
+location = /favicon.ico { log_not_found off; }
+location = /robots.txt { allow all;access_log off;log_not_found off; }
+location ~ /\. { deny all; }
+location ~ ~$ { deny all; }
+location ~* /*.(sh|py)$ { deny all; }

@@ -1,0 +1,127 @@
+#!/bin/sh
+
+# MySQL daemon start/stop script.
+
+basedir=/usr/local/mysql
+datadir=/data/mysqlDB/master/port
+bindir=$basedir/bin
+
+#
+# Use LSB init script functions for printing messages, if possible
+#
+lsb_functions="/lib/lsb/init-functions"
+if test -f $lsb_functions ; then
+  . $lsb_functions
+else
+  log_success_msg()
+  {
+    echo " SUCCESS! $@"
+  }
+  log_failure_msg()
+  {
+    echo " ERROR! $@"
+  }
+fi
+
+
+mode=$1 # start or stop
+case "$1" in
+    'start')
+      # Start daemon
+      echo "Starting MySQL"
+      if test -x $bindir/mysqld_safe
+      then
+          if test -f $datadir/start-mysql.sh
+          then
+              $datadir/start-mysql.sh >/dev/null ; return_value=$?
+              if test $return_value -eq 0
+              then
+                  log_success_msg "MySQL start ok"
+                  exit $return_value
+              else
+                  log_failure_msg "MySQL start failed, please check it."
+                  exit 2
+              fi
+          else
+             log_failure_msg "Couldn't find MySQL server ($datadir/start-mysql.sh)"
+             exit 2
+          fi
+      else
+          log_failure_msg "Couldn't find MySQL server ($bindir/mysqld_safe)"
+          exit 2
+      fi
+    ;;
+    'stop')
+      # Stop daemon. We use a signal here to avoid having to know the
+      # root password.
+      echo "Shutting down MySQL"
+      mysqld_pid=`pidof $bindir/mysqld`
+      pid_count=`echo $mysqld_pid | wc -w`
+      if test $pid_count -gt 1; then
+          log_failure_msg "Multiple MySQL running but PID file could not be found ($mysqld_pid)"
+          exit 5
+      elif test $pid_count -eq 1;then
+          kill $mysqld_pid
+          log_success_msg "MySQL stop ok"
+          sleep 1
+          exit 0
+      else
+          log_failure_msg "MySQL is not running"
+          exit 3
+      fi
+    ;;
+    'restart')
+      # Stop the service and regardless of whether it was
+      # running or not, start it again.
+      if $0 stop;then
+          sleep 1
+          $0 start
+      else
+          log_failure_msg "Failed to stop running server, so refusing to try to start."
+          exit 1
+      fi
+    ;;
+    'reload'|'force-reload')
+      echo "Reloading MySQL"
+      mysqld_pid=`pidof $bindir/mysqld`
+      pid_count=`echo $mysqld_pid | wc -w`
+      if test $pid_count -gt 1; then
+          log_failure_msg "Multiple MySQL running but PID file could not be found ($mysqld_pid)"
+          exit 5
+      elif test $pid_count -eq 1;then
+          kill -HUP $mysqld_pid && log_success_msg "Reloading service MySQL"
+          sleep 1
+          exit 0
+      else
+          log_failure_msg "MySQL is not running"
+          exit 3
+      fi
+    ;;
+    'status')
+      mysqld_pid=`pidof $bindir/mysqld`
+      pid_count=`echo $mysqld_pid | wc -w`
+      if test $pid_count -gt 1; then
+          log_failure_msg "Multiple MySQL running but PID file could not be found ($mysqld_pid)"
+          exit 5
+      elif test $pid_count -eq 1;then
+          if kill -0 $mysqld_pid 2>/dev/null ; then
+              log_success_msg "MySQL running ($mysqld_pid)"
+              exit 0
+          else
+              log_failure_msg "MySQL is not running"
+              exit 1
+          fi
+          sleep 1
+          exit 0
+      else
+          log_failure_msg "MySQL is not running"
+          exit 3
+      fi
+    ;;
+    *)
+      # usage
+      basename=`basename "$0"`
+      echo "Usage: $basename  {start|stop|restart|reload|force-reload|status}"
+      exit 1
+    ;;
+esac
