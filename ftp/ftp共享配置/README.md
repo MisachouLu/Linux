@@ -22,8 +22,7 @@ FTP服务中存在三类用户：本地用户、匿名用户、虚拟用户。
 
 FTP服务端配置文件目录为/etc/vsftpd，下面默认存在三个文件，**ftpusers**、**user_list**以及主配置文件**vsftpd.conf**，下面看下三个文件的说明。  
 
-ftpusers相当于一份黑名单，不受任何配置影响，总是有效，该文件存放的是一个禁止访问FTP的用户列表，通常为了安全考虑，管理员不希望一些拥有过大权限的帐号（比如root)登入FTP，  
-以免通过该帐号从FTP上传或下载一些危险位置上的文件从而对系统造成损坏。  
+ftpusers相当于一份黑名单，不受任何配置影响，总是有效，该文件存放的是一个禁止访问FTP的用户列表，通常为了安全考虑，管理员不希望一些拥有过大权限的帐号（比如root)登入FTP，以免通过该帐号从FTP上传或下载一些危险位置上的文件从而对系统造成损坏。  
 
 userlist_enable和userlist_deny两个选项联合起来针对的是本地全体用户(除去ftpusers中的用户)和出现在user_list文件中的用户以及不在user_list文件中的用户这三类用户集合进行的设置。  
 当且仅当userlist_enable=YES时，userlist_deny项的配置才有效，user_list文件才会被使用；当其为NO时，无论userlist_deny项为何值都是无效的，本地全体用户(除去ftpusers中的用户)都可以登入FTP。  
