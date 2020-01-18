@@ -1,2 +1,2 @@
-CentOS Operating System Service Configuration
+Not Just Linux
 =====
