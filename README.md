@@ -28,5 +28,17 @@
   * 关系型数据库
   * NoSql
 * 开源监控
+  * Zabbix
+  * Nagios
+  * Grafana
+  * Prometheus
 * 自动化
+  * Ansible
+  * SaltStack
+  * Putty
 * 系统安全
+
+**
+
+* Linux Command  
+  Linux是以命令行为核心的操作系统，命令各种各样，除了系统自带的，我们还可以自定义命令，每个命令都有对应的参数，要记住这么多命令参数是不可能的，除了常用命令，其他命令使用可以参考https://wangchujiang.com/linux-command/，中文格式，可以很好的查阅使用。
